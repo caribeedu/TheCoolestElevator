@@ -8,6 +8,8 @@ import { BuildingFloorComponent } from './components/building-floor/building-flo
 import { ElevatorComponent } from './components/elevator/elevator.component';
 import { ElevatorPanelComponent } from './components/elevator-panel/elevator-panel.component';
 
+import { ElevatorService } from './services/elevator/elevator.service';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -19,7 +21,9 @@ import { ElevatorPanelComponent } from './components/elevator-panel/elevator-pan
 	imports: [
 		BrowserModule
 	],
-	providers: [],
+	providers: [
+		ElevatorService
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
