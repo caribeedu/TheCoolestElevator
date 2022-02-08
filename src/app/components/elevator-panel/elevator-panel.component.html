@@ -1,12 +1,24 @@
 <section class="elevator-panel">
 	<div class="elevator-panel__status">
-		<span>/\</span>
-		<label>1</label>
+		<span>
+			{{ elevatorService.movementDirection$.value === 1 ? '\\/' : '/\\' }}
+		</span>
+		<label>
+			{{ elevatorService.currentFloor$.value }}
+		</label>
 	</div>
 	<div class="elevator-panel__controls">
-		<button class="elevator-panel__controls__button">1</button>
-		<button class="elevator-panel__controls__button">2</button>
-		<button class="elevator-panel__controls__button">3</button>
-		<button class="elevator-panel__controls__button">4</button>
+		<button class="elevator-panel__controls__button" (click)="travelFloor(1)">
+			1
+		</button>
+		<button class="elevator-panel__controls__button" (click)="travelFloor(2)">
+			2
+		</button>
+		<button class="elevator-panel__controls__button" (click)="travelFloor(3)">
+			3
+		</button>
+		<button class="elevator-panel__controls__button" (click)="travelFloor(4)">
+			4
+		</button>
 	</div>
 </section>

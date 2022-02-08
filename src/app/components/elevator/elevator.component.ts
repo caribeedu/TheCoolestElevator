@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { ElevatorService } from 'src/app/services/elevator/elevator.service';
 
 @Component({
-  selector: 'tce-elevator',
-  templateUrl: './elevator.component.html',
-  styleUrls: ['./elevator.component.scss']
+	selector: 'tce-elevator',
+	templateUrl: './elevator.component.html',
+	styleUrls: ['./elevator.component.scss']
 })
-export class ElevatorComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class ElevatorComponent {
+	constructor(public elevatorService: ElevatorService) { }
 }

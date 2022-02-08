@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
+import { ElevatorDirection, ElevatorDoor, ElevatorState } from '../../enum/elevator.enum';
+
 import { ElevatorService } from './elevator.service';
 
 describe('ElevatorService', () => {
@@ -12,6 +14,13 @@ describe('ElevatorService', () => {
 
 	it('should be created', () => {
 		expect(service).toBeTruthy();
+
+		expect(service.pendingRequests).toEqual([]);
+
+		expect(service.doors$.value).toEqual(ElevatorDoor.CLOSED);
+		expect(service.movement$.value).toEqual(ElevatorState.STOPPED);
+		expect(service.movementDirection$.value).toEqual(ElevatorDirection.UPPING);
+		expect(service.currentFloor$.value).toEqual(1);
 	});
 
 	describe('#call', () => {
@@ -25,7 +34,11 @@ describe('ElevatorService', () => {
 	});
 
 	describe('#travelPanel', () => {
-		it('should return before change elevator doors state if door is already closed', () => {
+		it('should add desired floor to pending request list if door is already closed', () => {
+
+		});
+
+		it('should return if door is already closed', () => {
 
 		});
 
@@ -47,15 +60,7 @@ describe('ElevatorService', () => {
 	});
 
 	describe('#validateRequests', () => {
-		it('should call #shouldMove', () => {
-
-		});
-
-		it('should call #goToFloor with desired floor if #shouldMove returns true', () => {
-
-		});
-
-		it('shouldn\'t call #goToFloor with desired floor if #shouldMove returns false', () => {
+		it('should return if #shouldMove returns false', () => {
 
 		});
 

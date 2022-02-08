@@ -23,6 +23,11 @@ describe('BuildingFloorComponent', () => {
 
 	it('should create', () => {
 		expect(component).toBeTruthy();
+
+		expect(component.elevatorService).toBeDefined();
+
+		expect(component.floorNumber).toBeDefined();
+		expect(component.floorNumber).toBeGreaterThan(0);
 	});
 
 	describe('#callElevator', () => {
