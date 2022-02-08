@@ -40,6 +40,10 @@ describe('ElevatorService', () => {
 		it('should call #goToFloor with given floor if #shouldMove returns true', () => {
 
 		});
+
+		it('shouldn\'t call #goToFloor with given floor if #shouldMove returns false', () => {
+
+		});
 	});
 
 	describe('#validateRequests', () => {
