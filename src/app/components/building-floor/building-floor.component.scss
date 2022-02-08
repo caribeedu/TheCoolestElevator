@@ -1,0 +1,30 @@
+.building-floor {
+	height: var(--floor-height);
+	display: flex;
+
+	&__controls,
+	&__construction {
+		width: 50%;
+		height: 100%;
+	}
+
+	&__controls {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		&__button {
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	&__construction {
+		background-color: #cfcfcf;
+		border-left: var(--border);
+		border-right: var(--border);
+		border-top: var(--border);
+		box-sizing: border-box;
+	}
+}

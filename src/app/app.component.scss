@@ -1,0 +1,10 @@
+.overview {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+
+	&__container {
+		width: 45%;
+		height: 384px;
+	}
+}

@@ -1,0 +1,51 @@
+.elevator-space {
+	position: absolute;
+	left: calc(50% - calc(var(--elevator-width) / 2));
+	width: var(--elevator-width);
+	display: block;
+	background-color: #767676;
+	height: 289px;
+	bottom: calc(var(--elevator-height) * -1);
+}
+
+.elevator {
+	width: var(--elevator-width);
+	height: var(--elevator-height);
+	border: var(--border);
+	box-sizing: border-box;
+	background-color: #bf3636;
+	box-shadow: inset #a11b18 0px 4px 10px;
+	display: flex;
+	position: absolute;
+	contain: content;
+
+	&__door {
+		width: 50%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		background-color: #e3e3e3;
+
+		&:first-child {
+			border-right: var(--border);
+			left: 0;
+		}
+
+		&:last-child {
+			border-left: var(--border);
+			right: 0;
+		}
+	}
+
+	&--open {
+		& > .elevator__door {
+			&:first-child {
+				left: -100%;
+			}
+
+			&:last-child {
+				right: -100%;
+			}
+		}
+	}
+}
