@@ -17,6 +17,12 @@
 		&__button {
 			width: 24px;
 			height: 24px;
+			border-radius: 100%;
+			border: var(--border);
+			box-sizing: border-box;
+			background-color: yellow;
+			font-weight: 600;
+			margin: 2px 0;
 		}
 	}
 
