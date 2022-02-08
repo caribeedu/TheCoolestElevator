@@ -1,25 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ElevatorComponent } from './elevator.component';
+import { ElevatorService } from 'src/app/services/elevator/elevator.service';
 
 describe('ElevatorComponent', () => {
-  let component: ElevatorComponent;
-  let fixture: ComponentFixture<ElevatorComponent>;
+	let component: ElevatorComponent;
+	let fixture: ComponentFixture<ElevatorComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ElevatorComponent ]
-    })
-    .compileComponents();
-  });
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [ElevatorComponent],
+			providers: [ElevatorService]
+		}).compileComponents();
+	});
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ElevatorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(ElevatorComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });
