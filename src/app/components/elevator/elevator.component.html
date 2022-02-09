@@ -1,4 +1,4 @@
-<section class="elevator-space" [style.--floors]="floors">
+<section class="elevator-space" [style.--floors]="buildingService.numberOfFloors$.value">
 	<div class="elevator" [style.--floor-level]="elevatorService.currentFloor$.value"
 		[ngClass]="{'elevator--open': elevatorService.doors$.value === 'OPENED'}">
 		<div class="elevator__door"></div>

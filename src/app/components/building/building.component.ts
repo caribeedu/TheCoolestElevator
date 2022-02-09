@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { BuildingService } from 'src/app/services/building/building.service';
 
 @Component({
 	selector: 'tce-building',
@@ -6,6 +7,5 @@ import { Component, Input } from '@angular/core';
 	styleUrls: ['./building.component.scss']
 })
 export class BuildingComponent {
-	/* Number of floors in building */
-	@Input() public floors: Number = 4;
+	constructor(public buildingService: BuildingService) { }
 }

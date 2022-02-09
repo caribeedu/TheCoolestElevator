@@ -9,6 +9,7 @@ import { ElevatorComponent } from './components/elevator/elevator.component';
 import { ElevatorPanelComponent } from './components/elevator-panel/elevator-panel.component';
 
 import { ElevatorService } from './services/elevator/elevator.service';
+import { BuildingService } from './services/building/building.service';
 
 @NgModule({
 	declarations: [
@@ -22,7 +23,8 @@ import { ElevatorService } from './services/elevator/elevator.service';
 		BrowserModule
 	],
 	providers: [
-		ElevatorService
+		ElevatorService,
+		BuildingService
 	],
 	bootstrap: [AppComponent]
 })

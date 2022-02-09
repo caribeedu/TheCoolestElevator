@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
+import { BuildingService } from 'src/app/services/building/building.service';
 import { ElevatorService } from 'src/app/services/elevator/elevator.service';
 
 @Component({
@@ -8,8 +9,8 @@ import { ElevatorService } from 'src/app/services/elevator/elevator.service';
 	styleUrls: ['./elevator.component.scss']
 })
 export class ElevatorComponent {
-	/* Number of floors */
-	@Input() public floors: Number = 4;
-
-	constructor(public elevatorService: ElevatorService) { }
+	constructor(
+		public elevatorService: ElevatorService,
+		public buildingService: BuildingService
+	) { }
 }
