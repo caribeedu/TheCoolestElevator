@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ElevatorDoor } from 'src/app/enum/elevator.enum';
 
 import { BuildingService } from 'src/app/services/building/building.service';
 import { ElevatorService } from 'src/app/services/elevator/elevator.service';
@@ -22,7 +23,10 @@ export class ElevatorPanelComponent {
 	 * @param floor - Final desired floor
 	 */
 	public travel(floor: number): void {
-		if (this.elevatorService.currentFloor$.value !== floor) {
+		if (
+			this.elevatorService.currentFloor$.value !== floor
+			|| this.elevatorService.doors$.value === ElevatorDoor.CLOSED
+		) {
 			this.elevatorService.newPanelCall$.next(floor);
 		}
 	}

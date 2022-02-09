@@ -63,7 +63,8 @@ export class ElevatorService {
 	 */
 	public newCall(call: IElevatorCall): void {
 		if (call.type === ElevatorCall.PANEL) {
-			this.pendingRequests.unshift(call);
+			const lastPanelCallIndex: number = this.pendingRequests.filter((request: IElevatorCall) => request.type === ElevatorCall.PANEL).length;
+			this.pendingRequests.splice(lastPanelCallIndex, 0, call);
 		}
 		else if (call.type === ElevatorCall.FLOOR) {
 			this.pendingRequests.push(call);
