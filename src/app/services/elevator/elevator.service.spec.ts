@@ -15,6 +15,9 @@ describe('ElevatorService', () => {
 	it('should be created', () => {
 		expect(service).toBeTruthy();
 
+		expect(service.newFloorCall$).toBeDefined();
+		expect(service.newPanelCall$).toBeDefined();
+
 		expect(service.pendingRequests).toEqual([]);
 
 		expect(service.doors$.value).toEqual(ElevatorDoor.CLOSED);
