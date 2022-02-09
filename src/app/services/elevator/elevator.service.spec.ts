@@ -45,7 +45,7 @@ describe('ElevatorService', () => {
 	})
 
 	describe('#newCall', () => {
-		it('should add new call to pending requests in start of list, if call type is panel', () => {
+		it('should add new call to pending requests in start of list, after the existent panel calls (if them exist\'s), if call type is panel', () => {
 
 		});
 
