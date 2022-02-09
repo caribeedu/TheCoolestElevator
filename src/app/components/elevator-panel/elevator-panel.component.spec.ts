@@ -30,7 +30,7 @@ describe('ElevatorPanelComponent', () => {
 
 		});
 
-		it('shouldn\'t call elevatorService #newPanelCall$.next with desired floor if this is the current floor', () => {
+		it('shouldn\'t call elevatorService #newPanelCall$.next with desired floor if this is the current floor and doors is opened', () => {
 
 		});
 	});
