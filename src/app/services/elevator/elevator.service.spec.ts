@@ -42,15 +42,11 @@ describe('ElevatorService', () => {
 	})
 
 	describe('#newCall', () => {
-		it('should add new call to pending requests in start of list, sorted descended by floor number, if call type is panel and movement direction is downing', () => {
+		it('should add new call to pending requests in start of list, if call type is panel', () => {
 
 		});
 
-		it('should add new call to pending requests in start of list, sorted ascended by floor number, if call type is panel and movement direction is upping', () => {
-
-		});
-
-		it('should add new call to pending requests in end of list if call type is floor', () => {
+		it('should add new call to pending requests in end of list, if call type is floor', () => {
 
 		});
 
