@@ -25,12 +25,12 @@ describe('ElevatorPanelComponent', () => {
 		expect(component).toBeTruthy();
 	});
 
-	describe('#travelFloor', () => {
-		it('should call elevatorService #travelPanel with desired floor', () => {
+	describe('#travel', () => {
+		it('should call elevatorService #newPanelCall$.next with desired floor', () => {
 
 		});
 
-		it('shouldn\'t call elevatorService #travelPanel with desired floor if this is the current floor', () => {
+		it('shouldn\'t call elevatorService #newPanelCall$.next with desired floor if this is the current floor', () => {
 
 		});
 	});

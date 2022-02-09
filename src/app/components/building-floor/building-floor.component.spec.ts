@@ -31,7 +31,7 @@ describe('BuildingFloorComponent', () => {
 	});
 
 	describe('#callElevator', () => {
-		it('should call elevatorService #call with this floor number', () => {
+		it('should call elevatorService #newFloorCall.next with this floor number', () => {
 
 		});
 	});

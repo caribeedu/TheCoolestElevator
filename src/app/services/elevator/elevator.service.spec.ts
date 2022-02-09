@@ -23,8 +23,34 @@ describe('ElevatorService', () => {
 		expect(service.currentFloor$.value).toEqual(1);
 	});
 
-	describe('#call', () => {
-		it('should add desired floor to pending requests list', () => {
+	describe('#handleCalls', () => {
+		it('should subscribe to new floor calls', () => {
+
+		});
+
+		it('should subscribe to new elevator panel calls', () => {
+
+		});
+
+		it('should call #newCall with enum type PANEL and desired floor on new panel call', () => {
+
+		});
+
+		it('should call #newCall with enum type FLOOR and desired floor on new floor call', () => {
+
+		});
+	})
+
+	describe('#newCall', () => {
+		it('should add new call to pending requests in start of list, sorted descended by floor number, if call type is panel and movement direction is downing', () => {
+
+		});
+
+		it('should add new call to pending requests in start of list, sorted ascended by floor number, if call type is panel and movement direction is upping', () => {
+
+		});
+
+		it('should add new call to pending requests in end of list if call type is floor', () => {
 
 		});
 
@@ -33,34 +59,8 @@ describe('ElevatorService', () => {
 		});
 	});
 
-	describe('#travelPanel', () => {
-		it('should add desired floor to pending request list if door is already closed', () => {
-
-		});
-
-		it('should return if door is already closed', () => {
-
-		});
-
-		it('should set elevator doors state as closed before call #shouldMove', () => {
-
-		});
-
-		it('should call #shouldMove', () => {
-
-		});
-
-		it('should call #goToFloor with given floor if #shouldMove returns true', () => {
-
-		});
-
-		it('shouldn\'t call #goToFloor with given floor if #shouldMove returns false', () => {
-
-		});
-	});
-
 	describe('#validateRequests', () => {
-		it('should return if #shouldMove returns false', () => {
+		it('should return if #canMove returns false', () => {
 
 		});
 
@@ -77,7 +77,7 @@ describe('ElevatorService', () => {
 		});
 	});
 
-	describe('#shouldMove', () => {
+	describe('#canMove', () => {
 		it('should returns true is elevator state is stopped and doors state is closed', () => {
 
 		});
@@ -123,10 +123,6 @@ describe('ElevatorService', () => {
 		});
 
 		it('should set elevator doors state as closed after five seconds, if elevator state is stopped', () => {
-
-		});
-
-		it('shouldn\'t set elevator doors state as closed after five seconds, if elevator state is moving', () => {
 
 		});
 
