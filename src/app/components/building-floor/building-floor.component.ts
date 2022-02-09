@@ -19,6 +19,6 @@ export class BuildingFloorComponent {
 	 * Call's the elevator to this floor
 	 */
 	public callElevator(): void {
-		this.elevatorService.call(this.floorNumber);
+		this.elevatorService.newFloorCall$.next(this.floorNumber);
 	}
 }

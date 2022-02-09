@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
-import { ElevatorDirection, ElevatorDoor, ElevatorState } from '../../enum/elevator.enum';
+import { ElevatorDirection, ElevatorDoor, ElevatorState, ElevatorCall } from '../../enum/elevator.enum';
+import { IElevatorCall } from '../../interfaces/elevator.interface';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ElevatorService {
+	/* Floor call subscription */
+	public readonly newFloorCall$: Subject<number> = new Subject<number>();
+	/* Elevator panel call subscription */
+	public readonly newPanelCall$: Subject<number> = new Subject<number>();
+
 	/* Pending floor calls */
-	public readonly pendingRequests: Array<number> = [];
+	public readonly pendingRequests: Array<IElevatorCall> = [];
+
 	/* Elevator doors state */
 	public readonly doors$: BehaviorSubject<ElevatorDoor> = new BehaviorSubject<ElevatorDoor>(ElevatorDoor.CLOSED);
 	/* Elevator movement state */
@@ -18,36 +25,51 @@ export class ElevatorService {
 	/* Elevator current floor state */
 	public readonly currentFloor$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
 
-	/**
-	 * call
-	 *
-	 * Add elevator floor request to list pending
-	 *
-	 * @param floor - Floor number
-	 */
-	public call(floor: number): void {
-		this.pendingRequests.push(floor);
-		this.validateRequests();
+	constructor() {
+		this.handleCalls();
 	}
 
 	/**
-	 * travelPanel
+	 * handleCalls
 	 *
-	 * Travels through floors using elevator panel
-	 *
-	 * @param floor  - Floor number
+	 * Handle new floor and panels elevator calls
 	 */
-	public travelPanel(floor: number): void {
-		if (this.doors$.value === ElevatorDoor.CLOSED) {
-			this.pendingRequests.unshift(floor);
-			return;
+	public handleCalls(): void {
+		this.newFloorCall$.subscribe(
+			(floor: number) => this.newCall(
+				{
+					type: ElevatorCall.FLOOR,
+					floor
+				}
+			)
+		);
+
+		this.newPanelCall$.subscribe(
+			(floor: number) => this.newCall(
+				{
+					type: ElevatorCall.PANEL,
+					floor
+				}
+			)
+		);
+	}
+
+	/**
+	 * newCall
+	 *
+	 * Add elevator floor request to list pending
+	 *
+	 * @param call - Elevator call description
+	 */
+	public newCall(call: IElevatorCall): void {
+		if (call.type === ElevatorCall.PANEL) {
+			this.pendingRequests.unshift(call);
+		}
+		else if (call.type === ElevatorCall.FLOOR) {
+			this.pendingRequests.push(call);
 		}
 
-		this.doors$.next(ElevatorDoor.CLOSED);
-
-		if (this.shouldMove()) {
-			this.goToFloor(floor);
-		}
+		this.validateRequests();
 	}
 
 	/**
@@ -56,13 +78,13 @@ export class ElevatorService {
 	 * Validate if elevator can process next request and if should return to first floor
 	 */
 	public validateRequests(): void {
-		if (!this.shouldMove()) {
+		if (!this.canMove()) {
 			return;
 		}
 
 		if (this.pendingRequests.length) {
 			this.goToFloor(
-				this.pendingRequests[0]
+				this.pendingRequests[0].floor
 			);
 			// Removes first pending request from list
 			this.pendingRequests.splice(0, 1);
@@ -73,13 +95,13 @@ export class ElevatorService {
 	}
 
 	/**
-	 * shouldMove
+	 * canMove
 	 *
 	 * Validate if elevator can move by the current state
 	 *
 	 * @returns Elevator can move
 	 */
-	public shouldMove(): boolean {
+	public canMove(): boolean {
 		return this.movement$.value === ElevatorState.STOPPED && this.doors$.value === ElevatorDoor.CLOSED;
 	}
 
@@ -127,10 +149,7 @@ export class ElevatorService {
 		this.doors$.next(ElevatorDoor.OPENED);
 
 		setTimeout(() => {
-			if (this.movement$.value === ElevatorState.STOPPED) {
-				this.doors$.next(ElevatorDoor.CLOSED);
-			}
-
+			this.doors$.next(ElevatorDoor.CLOSED);
 			this.validateRequests();
 		}, 5000);
 	}

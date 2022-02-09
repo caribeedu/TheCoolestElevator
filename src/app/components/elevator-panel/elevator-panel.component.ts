@@ -12,15 +12,15 @@ export class ElevatorPanelComponent {
 	constructor(public elevatorService: ElevatorService) { }
 
 	/**
-	 * travelFloor
+	 * travel
 	 *
 	 * Travel's through the building floors
 	 *
 	 * @param floor - Final desired floor
 	 */
-	public travelFloor(floor: number): void {
+	public travel(floor: number): void {
 		if (this.elevatorService.currentFloor$.value !== floor) {
-			this.elevatorService.travelPanel(floor);
+			this.elevatorService.newPanelCall$.next(floor);
 		}
 	}
 }

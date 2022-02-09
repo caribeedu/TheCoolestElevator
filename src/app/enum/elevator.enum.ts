@@ -12,3 +12,8 @@ export enum ElevatorState {
 	STOPPED = 0,
 	MOVING = 1
 }
+
+export enum ElevatorCall {
+	FLOOR = 0,
+	PANEL = 1
+}
