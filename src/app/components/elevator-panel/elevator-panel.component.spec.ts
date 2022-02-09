@@ -23,8 +23,6 @@ describe('ElevatorPanelComponent', () => {
 
 	it('should create', () => {
 		expect(component).toBeTruthy();
-
-		expect(component.floors).toBeDefined();
 	});
 
 	describe('#travel', () => {
