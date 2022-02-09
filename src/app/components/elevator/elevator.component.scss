@@ -4,7 +4,7 @@
 	width: var(--elevator-width);
 	display: block;
 	background-color: #767676;
-	height: 289px;
+	height: calc(var(--elevator-height) * calc(var(--floors) * 2));
 	bottom: calc(var(--elevator-height) * -1);
 }
 

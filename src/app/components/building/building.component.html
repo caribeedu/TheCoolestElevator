@@ -1,12 +1,12 @@
 <section class="building">
 	<div class="building__floors">
 		<tce-building-floor *ngFor="
-				let item of [].constructor(floors);
+				let floor of [].constructor(floors);
 				let i = index;
 				first as isFirst;
 				last as isLast;
 			" [floorNumber]="i + 1" [firstFloor]="isFirst" [lastFloor]="isLast">
 		</tce-building-floor>
 	</div>
-	<tce-elevator></tce-elevator>
+	<tce-elevator [floors]="floors"></tce-elevator>
 </section>

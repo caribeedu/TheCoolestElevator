@@ -9,7 +9,7 @@ import { ElevatorService } from 'src/app/services/elevator/elevator.service';
 })
 export class ElevatorPanelComponent {
 	/* Number of floors in panel */
-	@Input() public readonly floors: Number = 4;
+	@Input() public floors: Number = 4;
 
 	constructor(public elevatorService: ElevatorService) { }
 

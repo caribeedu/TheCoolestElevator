@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class BuildingComponent {
 	/* Number of floors in building */
-	@Input() public readonly floors: Number = 4;
+	@Input() public floors: Number = 4;
 }
