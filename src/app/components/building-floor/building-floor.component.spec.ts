@@ -28,6 +28,8 @@ describe('BuildingFloorComponent', () => {
 
 		expect(component.floorNumber).toBeDefined();
 		expect(component.floorNumber).toBeGreaterThan(0);
+		expect(component.firstFloor).toBeDefined();
+		expect(component.lastFloor).toBeDefined();
 	});
 
 	describe('#callElevator', () => {
