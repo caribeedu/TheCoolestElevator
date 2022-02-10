@@ -45,6 +45,18 @@ describe('ElevatorService', () => {
 	})
 
 	describe('#newCall', () => {
+		it('should call #canAddNewCall', () => {
+
+		});
+
+		it('should call soundService #warn if #canAddNewCall returns false', () => {
+
+		});
+
+		it('shouldn\'t add new call to pending requests if #canAddNewCall returns false', () => {
+
+		});
+
 		it('should add new call to pending requests in start of list, after the existent panel calls (if them exist\'s), if call type is panel', () => {
 
 		});
@@ -54,6 +66,16 @@ describe('ElevatorService', () => {
 		});
 
 		it('should call #validateRequests', () => {
+
+		});
+	});
+
+	describe('#canAddNewCall', () => {
+		it('should return true if pending requests length is less than maximumPendingRequests', () => {
+
+		});
+
+		it('should return false if pending requests length is equal to maximumPendingRequests', () => {
 
 		});
 	});
