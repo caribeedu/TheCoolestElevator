@@ -10,6 +10,7 @@ import { ElevatorPanelComponent } from './components/elevator-panel/elevator-pan
 
 import { ElevatorService } from './services/elevator/elevator.service';
 import { BuildingService } from './services/building/building.service';
+import { SoundService } from './services/sound/sound.service';
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,8 @@ import { BuildingService } from './services/building/building.service';
 	],
 	providers: [
 		ElevatorService,
-		BuildingService
+		BuildingService,
+		SoundService
 	],
 	bootstrap: [AppComponent]
 })
