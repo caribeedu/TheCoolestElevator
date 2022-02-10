@@ -4,6 +4,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { ElevatorDirection, ElevatorDoor, ElevatorState, ElevatorCall } from '../../enum/elevator.enum';
 import { IElevatorCall } from '../../interfaces/elevator.interface';
 
+import { SoundService } from '../sound/sound.service';
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -13,6 +15,8 @@ export class ElevatorService {
 	/* Elevator panel call subscription */
 	public readonly newPanelCall$: Subject<number> = new Subject<number>();
 
+	/* Maximum number of calls that can be enqueued to pending requests */
+	public readonly maximumPendingRequests: Number = 10;
 	/* Pending floor calls */
 	public readonly pendingRequests: Array<IElevatorCall> = [];
 
@@ -25,7 +29,7 @@ export class ElevatorService {
 	/* Elevator current floor state */
 	public readonly currentFloor$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
 
-	constructor() {
+	constructor(public soundService: SoundService) {
 		this.handleCalls();
 	}
 
@@ -62,6 +66,11 @@ export class ElevatorService {
 	 * @param call - Elevator call description
 	 */
 	public newCall(call: IElevatorCall): void {
+		if (!this.canAddNewCall()) {
+			this.soundService.warn();
+			return;
+		}
+
 		if (call.type === ElevatorCall.PANEL) {
 			const lastPanelCallIndex: number = this.pendingRequests.filter((request: IElevatorCall) => request.type === ElevatorCall.PANEL).length;
 			this.pendingRequests.splice(lastPanelCallIndex, 0, call);
@@ -74,9 +83,18 @@ export class ElevatorService {
 	}
 
 	/**
+	 * canAddNewCall
+	 *
+	 * Validates current pending requests queue length in comparison of maximum requests allowed
+	 */
+	public canAddNewCall(): boolean {
+		return this.pendingRequests.length < this.maximumPendingRequests;
+	}
+
+	/**
 	 * validateRequests
 	 *
-	 * Validate if elevator can process next request and if should return to first floor
+	 * Validates if elevator can process next request and if should return to first floor
 	 */
 	public validateRequests(): void {
 		if (!this.canMove()) {
