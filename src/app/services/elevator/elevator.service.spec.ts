@@ -142,6 +142,10 @@ describe('ElevatorService', () => {
 
 		});
 
+		it('should call soundService #bell', () => {
+
+		});
+
 		it('should set elevator doors state as open', () => {
 
 		});
