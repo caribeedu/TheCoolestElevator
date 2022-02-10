@@ -108,7 +108,7 @@ export class ElevatorService {
 			// Removes first pending request from list
 			this.pendingRequests.splice(0, 1);
 		}
-		else {
+		else if (this.currentFloor$.value !== 1) {
 			this.goToFloor(1);
 		}
 	}
