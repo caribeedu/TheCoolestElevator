@@ -88,7 +88,7 @@ describe('ElevatorService', () => {
 
 		});
 
-		it('should call #goToFloor with first floor if pending request list is empty', () => {
+		it('should call #goToFloor with first floor if pending request list is empty and current floor isn\'t first', () => {
 
 		});
 
