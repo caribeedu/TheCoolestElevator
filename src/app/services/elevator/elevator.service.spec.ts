@@ -3,12 +3,15 @@ import { TestBed } from '@angular/core/testing';
 import { ElevatorDirection, ElevatorDoor, ElevatorState } from '../../enum/elevator.enum';
 
 import { ElevatorService } from './elevator.service';
+import { SoundService } from '../sound/sound.service';
 
 describe('ElevatorService', () => {
 	let service: ElevatorService;
 
 	beforeEach(() => {
-		TestBed.configureTestingModule({});
+		TestBed.configureTestingModule({
+			providers: [SoundService]
+		});
 		service = TestBed.inject(ElevatorService);
 	});
 
