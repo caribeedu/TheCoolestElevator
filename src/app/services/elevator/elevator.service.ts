@@ -165,6 +165,9 @@ export class ElevatorService {
 	 */
 	public arrive(): void {
 		this.movement$.next(ElevatorState.STOPPED);
+
+		this.soundService.bell();
+
 		this.doors$.next(ElevatorDoor.OPENED);
 
 		setTimeout(() => {
