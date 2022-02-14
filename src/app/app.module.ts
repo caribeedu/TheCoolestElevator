@@ -11,6 +11,7 @@ import { ElevatorPanelComponent } from './components/elevator-panel/elevator-pan
 import { ElevatorService } from './services/elevator/elevator.service';
 import { BuildingService } from './services/building/building.service';
 import { SoundService } from './services/sound/sound.service';
+import { RandomOccupantService } from './services/random-occupant/random-occupant.service';
 
 @NgModule({
 	declarations: [
@@ -26,7 +27,8 @@ import { SoundService } from './services/sound/sound.service';
 	providers: [
 		ElevatorService,
 		BuildingService,
-		SoundService
+		SoundService,
+		RandomOccupantService
 	],
 	bootstrap: [AppComponent]
 })
