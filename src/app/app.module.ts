@@ -12,6 +12,8 @@ import { ElevatorService } from './services/elevator/elevator.service';
 import { BuildingService } from './services/building/building.service';
 import { SoundService } from './services/sound/sound.service';
 import { RandomOccupantService } from './services/random-occupant/random-occupant.service';
+import { BuildingConfiguratorComponent } from './components/building-configurator/building-configurator.component';
+import { RandomOccupantsComponent } from './components/random-occupants/random-occupants.component';
 
 @NgModule({
 	declarations: [
@@ -19,7 +21,9 @@ import { RandomOccupantService } from './services/random-occupant/random-occupan
 		BuildingComponent,
 		BuildingFloorComponent,
 		ElevatorComponent,
-		ElevatorPanelComponent
+		ElevatorPanelComponent,
+  BuildingConfiguratorComponent,
+  RandomOccupantsComponent
 	],
 	imports: [
 		BrowserModule
