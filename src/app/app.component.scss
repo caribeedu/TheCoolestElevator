@@ -6,7 +6,11 @@
 	justify-content: space-between;
 
 	&__container {
-		width: 45%;
+		width: 25%;
 		height: 512px;
+
+		&--lg {
+			width: 45%;
+		}
 	}
 }
