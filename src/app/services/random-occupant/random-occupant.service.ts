@@ -9,7 +9,7 @@ import { ElevatorService } from '../elevator/elevator.service';
 })
 export class RandomOccupantService {
 	/* Interval of new occupants appearing in the building, in seconds */
-	public readonly appearInterval$: BehaviorSubject<number> = new BehaviorSubject<number>(7.5);
+	public readonly appearInterval$: BehaviorSubject<number> = new BehaviorSubject<number>(15);
 	/* Floors who's has occupants awaiting */
 	public readonly occupiedFloors$: BehaviorSubject<Array<Number>> = new BehaviorSubject<Array<Number>>([]);
 

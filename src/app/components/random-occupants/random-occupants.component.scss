@@ -1,0 +1,52 @@
+.random-occupants {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 25%;
+
+	&__person {
+		position: absolute;
+		bottom: calc(calc(var(--floor-level) - 1) * var(--floor-height));
+		height: var(--floor-height);
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: center;
+
+		&__head {
+			width: 10px;
+			height: 10px;
+			border-radius: 100%;
+			background-color: black;
+		}
+
+		&__body {
+			width: 14px;
+			height: 20px;
+			background-color: black;
+			border-top-left-radius: 6px;
+			border-top-right-radius: 6px;
+		}
+
+		&::after {
+			content: "Awaiting elevator!";
+			position: absolute;
+			right: -150px;
+			top: calc(var(--floor-height) / 3);
+			font-size: 12pt;
+			font-weight: 600;
+			animation: 5s fade-out forwards;
+		}
+	}
+}
+
+@keyframes fade-out {
+	75% {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}

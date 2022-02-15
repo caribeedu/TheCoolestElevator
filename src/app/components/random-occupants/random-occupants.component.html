@@ -1,1 +1,7 @@
-<p>random-occupants works!</p>
+<section class="random-occupants">
+	<div [style.--floor-level]="floor" *ngFor="let floor of randomOccupantsService.occupiedFloors$.value"
+		class="random-occupants__person">
+		<span class="random-occupants__person__head"></span>
+		<span class="random-occupants__person__body"></span>
+	</div>
+</section>
