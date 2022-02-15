@@ -1,17 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ElevatorCall, ElevatorDirection, ElevatorDoor, ElevatorState } from '../../enum/elevator.enum';
+import { IElevatorCall } from 'src/app/interfaces/elevator.interface';
 
 import { ElevatorService } from './elevator.service';
 import { SoundService } from '../sound/sound.service';
 
 describe('ElevatorService', () => {
 	let service: ElevatorService;
+	let handleCallsSpy: jasmine.Spy;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			providers: [SoundService]
 		});
+
+		// Spy method called in constructor
+		handleCallsSpy = spyOn(ElevatorService.prototype, 'handleCalls');
+
 		service = TestBed.inject(ElevatorService);
 	});
 
@@ -31,21 +37,34 @@ describe('ElevatorService', () => {
 	});
 
 	describe('#handleCalls', () => {
-		it('should subscribe to new floor calls', () => {
-			const spy: jasmine.Spy = spyOn(service.newFloorCall$, 'subscribe');
+		let floorSubSpy: jasmine.Spy;
+		let panelSubSpy: jasmine.Spy;
 
-			expect(spy).toHaveBeenCalledWith(Function);
+		beforeEach(() => {
+			handleCallsSpy.and.callThrough();
+
+			floorSubSpy = spyOn(service.newFloorCall$, 'subscribe');
+			panelSubSpy = spyOn(service.newPanelCall$, 'subscribe');
+		});
+
+		it('should subscribe to new floor calls', () => {
+			service.handleCalls();
+
+			expect(floorSubSpy).toHaveBeenCalled();
 		});
 
 		it('should subscribe to new elevator panel calls', () => {
-			const spy: jasmine.Spy = spyOn(service.newPanelCall$, 'subscribe');
+			service.handleCalls();
 
-			expect(spy).toHaveBeenCalledWith(Function);
+			expect(panelSubSpy).toHaveBeenCalled();
 		});
 
 		it('should call #newCall with enum type PANEL and desired floor on new panel call', () => {
+			panelSubSpy.and.callThrough();
 			const spy: jasmine.Spy = spyOn(service, 'newCall');
 			const floorDouble: number = 3;
+
+			service.handleCalls();
 
 			service.newPanelCall$.next(floorDouble);
 
@@ -53,8 +72,11 @@ describe('ElevatorService', () => {
 		});
 
 		it('should call #newCall with enum type FLOOR and desired floor on new floor call', () => {
+			floorSubSpy.and.callThrough();
 			const spy: jasmine.Spy = spyOn(service, 'newCall');
-			const floorDouble: number = 3;
+			const floorDouble: number = 4;
+
+			service.handleCalls();
 
 			service.newFloorCall$.next(floorDouble);
 
@@ -63,28 +85,84 @@ describe('ElevatorService', () => {
 	})
 
 	describe('#newCall', () => {
-		it('should call #canAddNewCall', () => {
+		let validateRequestsSpy: jasmine.Spy;
 
+		beforeEach(() => {
+			validateRequestsSpy = spyOn(service, 'validateRequests');
+		});
+
+		it('should call #canAddNewCall', () => {
+			const spy: jasmine.Spy = spyOn(service, 'canAddNewCall');
+
+			service.newCall({ type: ElevatorCall.FLOOR, floor: 2 });
+
+			expect(spy).toHaveBeenCalled();
 		});
 
 		it('should call soundService #warn if #canAddNewCall returns false', () => {
+			const spy: jasmine.Spy = spyOn(service.soundService, 'warn');
+			spyOn(service, 'canAddNewCall').and.returnValue(false);
 
+			service.newCall({ type: ElevatorCall.FLOOR, floor: 2 });
+
+			expect(spy).toHaveBeenCalled();
 		});
 
 		it('shouldn\'t add new call to pending requests if #canAddNewCall returns false', () => {
+			const spy: jasmine.Spy = spyOn(service.pendingRequests, 'push');
+			spyOn(service, 'canAddNewCall').and.returnValue(false);
 
+			service.newCall({ type: ElevatorCall.FLOOR, floor: 2 });
+
+			expect(spy).not.toHaveBeenCalled();
 		});
 
 		it('should add new call to pending requests in start of list, after the existent panel calls (if them exist\'s), if call type is panel', () => {
+			const pendingRequestsDouble: Array<IElevatorCall> = [
+				{ type: ElevatorCall.PANEL, floor: 2 },
+				{ type: ElevatorCall.FLOOR, floor: 2 }
+			];
 
+			Object.defineProperty(service, 'pendingRequests', { value: pendingRequestsDouble });
+			spyOn(service, 'canAddNewCall').and.returnValue(true);
+
+			service.newCall({ type: ElevatorCall.PANEL, floor: 3 });
+
+			expect(service.pendingRequests).toEqual(
+				[
+					{ type: ElevatorCall.PANEL, floor: 2 },
+					{ type: ElevatorCall.PANEL, floor: 3 },
+					{ type: ElevatorCall.FLOOR, floor: 2 }
+				]
+			);
 		});
 
 		it('should add new call to pending requests in end of list, if call type is floor', () => {
+			const pendingRequestsDouble: Array<IElevatorCall> = [
+				{ type: ElevatorCall.PANEL, floor: 2 },
+				{ type: ElevatorCall.FLOOR, floor: 2 }
+			];
 
+			Object.defineProperty(service, 'pendingRequests', { value: pendingRequestsDouble });
+			spyOn(service, 'canAddNewCall').and.returnValue(true);
+
+			service.newCall({ type: ElevatorCall.FLOOR, floor: 3 });
+
+			expect(service.pendingRequests).toEqual(
+				[
+					{ type: ElevatorCall.PANEL, floor: 2 },
+					{ type: ElevatorCall.FLOOR, floor: 2 },
+					{ type: ElevatorCall.FLOOR, floor: 3 }
+				]
+			);
 		});
 
 		it('should call #validateRequests', () => {
+			spyOn(service, 'canAddNewCall').and.returnValue(true);
 
+			service.newCall({ type: ElevatorCall.FLOOR, floor: 3 });
+
+			expect(validateRequestsSpy).toHaveBeenCalled();
 		});
 	});
 
