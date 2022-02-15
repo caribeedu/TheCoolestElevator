@@ -15,10 +15,6 @@ describe('RandomOccupantService', () => {
 	});
 
 	describe('#getRandomAvailableFloor', () => {
-		it('should call #getOccupantsFloors', () => {
-
-		});
-
 		it('should return a existing floor number in the building with no occupants', () => {
 
 		});
@@ -28,12 +24,6 @@ describe('RandomOccupantService', () => {
 		});
 
 		it('should return null if hasn\'t any available floor', () => {
-
-		});
-	});
-
-	describe('#getOccupantsFloors', () => {
-		it('should return the floors who has occupants awaiting', () => {
 
 		});
 	});
