@@ -67,7 +67,7 @@ export class RandomOccupantService {
 		}
 
 		// Schedules a new occupant to appear in desired moment
-		setTimeout(() => this.generateNewOccupant(), this.appearInterval$.value);
+		setTimeout(() => this.generateNewOccupant(), this.appearInterval$.value * 1000);
 	}
 
 	/**
