@@ -14,6 +14,8 @@ export class ElevatorService {
 	public readonly newFloorCall$: Subject<number> = new Subject<number>();
 	/* Elevator panel call subscription */
 	public readonly newPanelCall$: Subject<number> = new Subject<number>();
+	/* Elevator floor arrive subscription */
+	public readonly arrived$: Subject<number> = new Subject<number>();
 
 	/* Maximum number of calls that can be enqueued to pending requests */
 	public readonly maximumPendingRequests: Number = 10;
@@ -86,6 +88,8 @@ export class ElevatorService {
 	 * canAddNewCall
 	 *
 	 * Validates current pending requests queue length in comparison of maximum requests allowed
+	 *
+	 * @returns Can add the new call to pending requests
 	 */
 	public canAddNewCall(): boolean {
 		return this.pendingRequests.length < this.maximumPendingRequests;
@@ -169,6 +173,8 @@ export class ElevatorService {
 		this.soundService.bell();
 
 		this.doors$.next(ElevatorDoor.OPENED);
+
+		this.arrived$.next(this.currentFloor$.value);
 
 		setTimeout(() => {
 			this.doors$.next(ElevatorDoor.CLOSED);
