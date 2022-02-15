@@ -300,50 +300,134 @@ describe('ElevatorService', () => {
 	});
 
 	describe('#goToFloor', () => {
-		it('should set elevator state as moving', () => {
+		let arriveSpy: jasmine.Spy;
 
+		beforeEach(() => {
+			arriveSpy = spyOn(service, 'arrive');
 		});
 
-		it('should set elevator direction state as upping if given floor is greater than current floor', () => {
+		it('should set elevator state as moving', async () => {
+			const spy: jasmine.Spy = spyOn(service.movement$, 'next');
+			const floorDouble: number = 2;
 
+			await service.goToFloor(floorDouble);
+
+			expect(spy).toHaveBeenCalledWith(ElevatorState.MOVING);
 		});
 
-		it('should set elevator direction state as downing if given floor is less than current floor', () => {
+		it('should set elevator direction state as upping if given floor is greater than current floor', async () => {
+			const spy: jasmine.Spy = spyOn(service.movementDirection$, 'next');
+			const floorDouble: number = 2;
 
+			service.currentFloor$.next(1);
+
+			await service.goToFloor(floorDouble);
+
+			expect(spy).toHaveBeenCalledWith(ElevatorDirection.UPPING);
 		});
 
-		it('should change elevator floor after one second by floor traveled', () => {
+		it('should set elevator direction state as downing if given floor is less than current floor', async () => {
+			const spy: jasmine.Spy = spyOn(service.movementDirection$, 'next');
+			const floorDouble: number = 2;
 
+			service.currentFloor$.next(4);
+
+			await service.goToFloor(floorDouble);
+
+			expect(spy).toHaveBeenCalledWith(ElevatorDirection.DOWNING);
 		});
 
-		it('should call #arrive after get final floor', () => {
+		it('should change elevator floor after one second by floor traveled', (done: DoneFn) => {
+			service.currentFloor$.next(1);
 
+			const spy: jasmine.Spy = spyOn(service.currentFloor$, 'next').and.callThrough();
+			const floorDouble: number = 3;
+
+			service.goToFloor(floorDouble).then(() => done());
+
+			expect(spy).toHaveBeenCalledWith(2);
+
+			setTimeout(() => expect(spy).toHaveBeenCalledWith(3), 1000);
+		});
+
+		it('should call #arrive after get final floor', async () => {
+			const floorDouble: number = 2;
+			service.currentFloor$.next(1);
+
+			await service.goToFloor(floorDouble);
+
+			expect(arriveSpy).toHaveBeenCalledTimes(1);
 		});
 	});
 
 	describe('#arrive', () => {
-		it('should set elevator state as stopped before set doors state as opened', () => {
+		let validateRequestsSpy: jasmine.Spy;
 
+		beforeEach(() => {
+			validateRequestsSpy = spyOn(service, 'validateRequests');
+		});
+
+		it('should set elevator state as stopped before set doors state as opened', () => {
+			const stateSpy: jasmine.Spy = spyOn(service.movement$, 'next');
+			const doorsSpy: jasmine.Spy = spyOn(service.doors$, 'next');
+
+			service.arrive();
+
+			expect(stateSpy).toHaveBeenCalledBefore(doorsSpy);
+			expect(doorsSpy).toHaveBeenCalled();
 		});
 
 		it('should call soundService #bell', () => {
+			const spy: jasmine.Spy = spyOn(service.soundService, 'bell');
 
+			service.arrive();
+
+			expect(spy).toHaveBeenCalledTimes(1);
 		});
 
 		it('should set elevator doors state as open', () => {
+			const doorsSpy: jasmine.Spy = spyOn(service.doors$, 'next');
 
+			service.arrive();
+
+			expect(doorsSpy).toHaveBeenCalledOnceWith(ElevatorDoor.OPENED);
 		});
 
 		it('should call arrived$ with the recent reached floor', () => {
+			const finalFloorDouble: number = 4;
+			const spy: jasmine.Spy = spyOn(service.arrived$, 'next');
 
+			service.currentFloor$.next(finalFloorDouble);
+
+			service.arrive();
+
+			expect(spy).toHaveBeenCalledOnceWith(finalFloorDouble);
 		});
 
-		it('should set elevator doors state as closed after five seconds, if elevator state is stopped', () => {
+		it('should set elevator doors state as closed after five seconds', () => {
+			const spy: jasmine.Spy = spyOn(service.doors$, 'next');
 
+			jasmine.clock().install();
+
+			service.arrive();
+
+			jasmine.clock().tick(5000);
+			jasmine.clock().uninstall();
+
+			expect(spy).toHaveBeenCalledWith(ElevatorDoor.CLOSED);
 		});
 
 		it('should call #validateRequests after five seconds', () => {
+			jasmine.clock().install();
 
+			service.arrive();
+
+			expect(validateRequestsSpy).not.toHaveBeenCalled();
+
+			jasmine.clock().tick(5000);
+			jasmine.clock().uninstall();
+
+			expect(validateRequestsSpy).toHaveBeenCalledTimes(1);
 		});
 	});
 });
