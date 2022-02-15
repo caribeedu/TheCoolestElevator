@@ -168,43 +168,129 @@ describe('ElevatorService', () => {
 
 	describe('#canAddNewCall', () => {
 		it('should return true if pending requests length is less than maximumPendingRequests', () => {
+			Object.defineProperty(service, 'pendingRequests', { value: [] });
+			Object.defineProperty(service, 'maximumPendingRequests', { value: 2 });
 
+			expect(service.canAddNewCall()).toEqual(true);
 		});
 
 		it('should return false if pending requests length is equal to maximumPendingRequests', () => {
+			Object.defineProperty(
+				service,
+				'pendingRequests',
+				{
+					value: [
+						{ type: ElevatorCall.PANEL, floor: 2 }
+					]
+				}
+			);
+			Object.defineProperty(service, 'maximumPendingRequests', { value: 1 });
 
+			expect(service.canAddNewCall()).toEqual(false);
 		});
 	});
 
 	describe('#validateRequests', () => {
-		it('should return if #canMove returns false', () => {
+		let goToFloorSpy: jasmine.Spy;
+		let canMoveSpy: jasmine.Spy;
 
+		beforeEach(() => {
+			goToFloorSpy = spyOn(service, 'goToFloor');
+			canMoveSpy = spyOn(service, 'canMove');
+		});
+
+		it('shouldn\'t call #goToFloor if #canMove returns false', () => {
+			service.currentFloor$.next(2);
+			canMoveSpy.and.returnValue(false);
+
+			service.validateRequests();
+
+			expect(goToFloorSpy).not.toHaveBeenCalled();
 		});
 
 		it('should call #goToFloor with first floor if pending request list is empty and current floor isn\'t first', () => {
+			service.currentFloor$.next(2);
+			canMoveSpy.and.returnValue(true);
 
+			Object.defineProperty(service, 'pendingRequests', { value: [] });
+
+			service.validateRequests();
+
+			expect(goToFloorSpy).toHaveBeenCalledOnceWith(1);
+		});
+
+		it('shouldn\'t call #goToFloor with first floor if pending request list is empty and current floor is first', () => {
+			service.currentFloor$.next(1);
+			canMoveSpy.and.returnValue(true);
+
+			Object.defineProperty(service, 'pendingRequests', { value: [] });
+
+			service.validateRequests();
+
+			expect(goToFloorSpy).not.toHaveBeenCalled();
 		});
 
 		it('should remove first pending request if has pending requests', () => {
+			canMoveSpy.and.returnValue(true);
 
+			Object.defineProperty(
+				service,
+				'pendingRequests',
+				{
+					value: [
+						{ type: ElevatorCall.PANEL, floor: 2 }
+					]
+				}
+			);
+
+			const spy: jasmine.Spy = spyOn(service.pendingRequests, 'splice');
+
+			service.validateRequests();
+
+			expect(spy).toHaveBeenCalledOnceWith(0, 1);
 		});
 
 		it('should call #goToFloor with first pending request if has pending requests', () => {
+			canMoveSpy.and.returnValue(true);
+			const floorDouble: number = 3;
 
+			Object.defineProperty(
+				service,
+				'pendingRequests',
+				{
+					value: [
+						{ type: ElevatorCall.PANEL, floor: floorDouble },
+						{ type: ElevatorCall.PANEL, floor: floorDouble + 1 }
+					]
+				}
+			);
+
+			service.validateRequests();
+
+			expect(goToFloorSpy).toHaveBeenCalledOnceWith(floorDouble);
 		});
 	});
 
 	describe('#canMove', () => {
 		it('should returns true is elevator state is stopped and doors state is closed', () => {
+			service.movement$.next(ElevatorState.STOPPED);
+			service.doors$.next(ElevatorDoor.CLOSED);
 
+			expect(service.canMove()).toEqual(true);
 		});
 
 		it('should returns false is elevator state is stopped and doors state is open', () => {
+			service.movement$.next(ElevatorState.STOPPED);
+			service.doors$.next(ElevatorDoor.OPENED);
 
+			expect(service.canMove()).toEqual(false);
 		});
 
 		it('should returns false is elevator state is moving and doors state is closed', () => {
+			service.movement$.next(ElevatorState.MOVING);
+			service.doors$.next(ElevatorDoor.CLOSED);
 
+			expect(service.canMove()).toEqual(false);
 		});
 	});
 
