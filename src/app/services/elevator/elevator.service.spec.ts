@@ -150,6 +150,10 @@ describe('ElevatorService', () => {
 
 		});
 
+		it('should call arrived$ with the recent reached floor', () => {
+
+		});
+
 		it('should set elevator doors state as closed after five seconds, if elevator state is stopped', () => {
 
 		});
