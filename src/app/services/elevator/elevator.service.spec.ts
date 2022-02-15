@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ElevatorDirection, ElevatorDoor, ElevatorState } from '../../enum/elevator.enum';
+import { ElevatorCall, ElevatorDirection, ElevatorDoor, ElevatorState } from '../../enum/elevator.enum';
 
 import { ElevatorService } from './elevator.service';
 import { SoundService } from '../sound/sound.service';
@@ -32,19 +32,33 @@ describe('ElevatorService', () => {
 
 	describe('#handleCalls', () => {
 		it('should subscribe to new floor calls', () => {
+			const spy: jasmine.Spy = spyOn(service.newFloorCall$, 'subscribe');
 
+			expect(spy).toHaveBeenCalledWith(Function);
 		});
 
 		it('should subscribe to new elevator panel calls', () => {
+			const spy: jasmine.Spy = spyOn(service.newPanelCall$, 'subscribe');
 
+			expect(spy).toHaveBeenCalledWith(Function);
 		});
 
 		it('should call #newCall with enum type PANEL and desired floor on new panel call', () => {
+			const spy: jasmine.Spy = spyOn(service, 'newCall');
+			const floorDouble: number = 3;
 
+			service.newPanelCall$.next(floorDouble);
+
+			expect(spy).toHaveBeenCalledOnceWith({ type: ElevatorCall.PANEL, floor: floorDouble });
 		});
 
 		it('should call #newCall with enum type FLOOR and desired floor on new floor call', () => {
+			const spy: jasmine.Spy = spyOn(service, 'newCall');
+			const floorDouble: number = 3;
 
+			service.newFloorCall$.next(floorDouble);
+
+			expect(spy).toHaveBeenCalledOnceWith({ type: ElevatorCall.FLOOR, floor: floorDouble });
 		});
 	})
 
