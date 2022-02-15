@@ -145,16 +145,14 @@ export class ElevatorService {
 			this.movementDirection$.next(ElevatorDirection.DOWNING);
 		}
 
+		const elevatorIsUpping: boolean = this.movementDirection$.value === ElevatorDirection.UPPING;
+
 		// Calculate floor difference using elevator movement direction
-		const floorDifference: number = this.movementDirection$.value === ElevatorDirection.UPPING ?
-			finalFloor - this.currentFloor$.value :
-			this.currentFloor$.value - finalFloor;
+		const floorDifference: number = elevatorIsUpping ? finalFloor - this.currentFloor$.value : this.currentFloor$.value - finalFloor;
 
 		// Changes elevator floor at each second
 		for (let i = 0; i < floorDifference; i++) {
-			this.currentFloor$.next(
-				this.movementDirection$.value === ElevatorDirection.UPPING ? this.currentFloor$.value + 1 : this.currentFloor$.value - 1
-			);
+			this.currentFloor$.next(elevatorIsUpping ? this.currentFloor$.value + 1 : this.currentFloor$.value - 1);
 
 			await new Promise<void>((res: Function, _: Function) => setTimeout(res, 1000));
 		}
