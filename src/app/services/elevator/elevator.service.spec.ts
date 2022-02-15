@@ -20,6 +20,7 @@ describe('ElevatorService', () => {
 
 		expect(service.newFloorCall$).toBeDefined();
 		expect(service.newPanelCall$).toBeDefined();
+		expect(service.arrived$).toBeDefined();
 
 		expect(service.pendingRequests).toEqual([]);
 
