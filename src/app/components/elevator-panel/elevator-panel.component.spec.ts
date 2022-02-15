@@ -26,11 +26,11 @@ describe('ElevatorPanelComponent', () => {
 	});
 
 	describe('#travel', () => {
-		it('should call elevatorService #newPanelCall$.next with desired floor', () => {
+		it('should call elevatorService newPanelCall$ #next with desired floor', () => {
 
 		});
 
-		it('shouldn\'t call elevatorService #newPanelCall$.next with desired floor if this is the current floor and doors is opened', () => {
+		it('shouldn\'t call elevatorService newPanelCall$ #next with desired floor if this is the current floor and doors is opened', () => {
 
 		});
 	});
