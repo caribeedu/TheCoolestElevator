@@ -33,11 +33,11 @@ describe('RandomOccupantService', () => {
 
 		});
 
-		it('should call occupants$ #next with the current occupants floors plus the floor number of new occupant', () => {
+		it('should call occupiedFloors$ #next with the current occupants floors plus the floor number of new occupant', () => {
 
 		});
 
-		it('shouldn\'t call occupants$ #next if #getRandomAvailableFloor returns null', () => {
+		it('shouldn\'t call occupiedFloors$ #next if #getRandomAvailableFloor returns null', () => {
 
 		});
 
@@ -51,11 +51,11 @@ describe('RandomOccupantService', () => {
 
 		});
 
-		it('should call occupants$ #next with the current occupants floors minus the floor number of elevator arrived, if has any occupant', () => {
+		it('should call occupiedFloors$ #next with the current occupants floors minus the floor number of elevator arrived, if has any occupant', () => {
 
 		});
 
-		it('shouldn\'t call occupants$ #next with the floor number of elevator arrived, if hasn\'t any occupant', () => {
+		it('shouldn\'t call occupiedFloors$ #next with the floor number of elevator arrived, if hasn\'t any occupant', () => {
 
 		});
 	});
