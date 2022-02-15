@@ -28,12 +28,17 @@ describe('ElevatorService', () => {
 		expect(service.newPanelCall$).toBeDefined();
 		expect(service.arrived$).toBeDefined();
 
+		expect(service.maximumPendingRequests).toEqual(10);
 		expect(service.pendingRequests).toEqual([]);
 
 		expect(service.doors$.value).toEqual(ElevatorDoor.CLOSED);
 		expect(service.movement$.value).toEqual(ElevatorState.STOPPED);
 		expect(service.movementDirection$.value).toEqual(ElevatorDirection.UPPING);
 		expect(service.currentFloor$.value).toEqual(1);
+	});
+
+	it('should call #handleCalls on class constructor', () => {
+		expect(handleCallsSpy).toHaveBeenCalledTimes(1);
 	});
 
 	describe('#handleCalls', () => {
