@@ -24,12 +24,12 @@ describe('BuildingConfiguratorComponent', () => {
 	});
 
 	describe('#ngOnInit', () => {
-		it('should call #initForms', () => {
+		it('should call #initForm', () => {
 
 		});
 	});
 
-	describe('#initForms', () => {
+	describe('#initForm', () => {
 		it('should define form group with default randomOccupantsService values', () => {
 
 		});
