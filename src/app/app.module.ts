@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
@@ -22,11 +23,12 @@ import { RandomOccupantsComponent } from './components/random-occupants/random-o
 		BuildingFloorComponent,
 		ElevatorComponent,
 		ElevatorPanelComponent,
-  BuildingConfiguratorComponent,
-  RandomOccupantsComponent
+		BuildingConfiguratorComponent,
+		RandomOccupantsComponent
 	],
 	imports: [
-		BrowserModule
+		BrowserModule,
+		ReactiveFormsModule
 	],
 	providers: [
 		ElevatorService,

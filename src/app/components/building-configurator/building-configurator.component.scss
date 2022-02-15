@@ -1,0 +1,21 @@
+.building-configurator {
+	& > label {
+		font-size: 11pt;
+	}
+
+	& > input {
+		padding: 4px 8px;
+		margin-top: 8px;
+	}
+
+	& > button {
+		display: block;
+		margin-top: 12px;
+		font-weight: 600;
+		padding: 8px 10px;
+
+		&:disabled {
+			cursor: not-allowed;
+		}
+	}
+}

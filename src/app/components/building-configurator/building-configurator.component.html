@@ -1,1 +1,6 @@
-<p>building-configurator works!</p>
+<form [formGroup]="paramsForm!" (ngSubmit)="updateParams()" class="building-configurator">
+	<label for="nome">Occupants appear interval (in seconds)</label>
+	<input type="number" formControlName="occupantsAppearInterval">
+
+	<button type="submit" [disabled]="!paramsForm?.valid">Update</button>
+</form>
