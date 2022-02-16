@@ -9,8 +9,52 @@
 		width: 25%;
 		height: 512px;
 
+		& > h1 {
+			min-height: 34px;
+			line-height: 34px;
+		}
+
 		&--lg {
 			width: 45%;
+		}
+	}
+}
+
+@media only screen and (max-width: 1024px) {
+	.overview {
+		flex-wrap: wrap;
+
+		&__container {
+			width: 35%;
+
+			&--lg {
+				width: 65%;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.overview {
+		&__container {
+			width: 50%;
+
+			&--lg {
+				width: 100%;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 481px) {
+	.overview {
+		&__container {
+			width: 100%;
+			height: unset;
+
+			&--lg {
+				height: 512px;
+			}
 		}
 	}
 }
