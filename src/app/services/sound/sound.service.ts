@@ -7,9 +7,9 @@ import { Howl, Howler } from 'howler';
 })
 export class SoundService {
 	/* Bell sound asset instance */
-	public readonly bellSound: Howl = new Howl({ src: '../../../assets/sounds/elevator_bell.mp3' });
+	public readonly bellSound: Howl = new Howl({ src: './assets/sounds/elevator_bell.mp3' });
 	/* Warn sound asset instance */
-	public readonly warnSound: Howl = new Howl({ src: '../../../assets/sounds/elevator_error.mp3' });
+	public readonly warnSound: Howl = new Howl({ src: './assets/sounds/elevator_error.mp3' });
 
 	/**
 	 * validateSoundVolume
