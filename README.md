@@ -1,6 +1,6 @@
 # The Coolest Elevator 🚪
 
-[](https://media.giphy.com/media/ZTgggVjz1wmQ72ErwT/giphy.gif)
+![](https://media.giphy.com/media/ZTgggVjz1wmQ72ErwT/giphy.gif)
 
 This a implementation of a elevator made with Angular.
 
