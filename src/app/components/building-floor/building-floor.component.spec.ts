@@ -33,8 +33,16 @@ describe('BuildingFloorComponent', () => {
 	});
 
 	describe('#callElevator', () => {
-		it('should call elevatorService newFloorCall$ #next with this floor number', () => {
+		let newFloorCallSpy: jasmine.Spy;
 
+		beforeEach(() => {
+			newFloorCallSpy = spyOn(component.elevatorService.newFloorCall$, 'next');
+		});
+
+		it('should call elevatorService newFloorCall$ #next with this floor number', () => {
+			component.callElevator();
+
+			expect(newFloorCallSpy).toHaveBeenCalledOnceWith(component.floorNumber);
 		});
 	});
 });
