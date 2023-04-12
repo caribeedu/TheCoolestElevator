@@ -4,7 +4,7 @@
 	"scripts": {
 		"ng": "ng",
 		"build": "ng build --prod",
-		"deploy": "ng deploy --base-href=/the-coolest-elevator/"
+		"deploy": "ng deploy --base-href=/TheCoolestElevator/"
 	},
 	"private": true,
 	"dependencies": {
